@@ -7,6 +7,7 @@
   packages = with pkgs; [
     gitFull
     tailscale
+    mariadb_118
   ];
   # Sets environment variables in the workspace
   env = {};
@@ -56,10 +57,6 @@
   services = {
     docker = {
       enable = true;
-    };
-    mysql = {
-      enable = true;
-      package = pkgs.mariadb_118;
     };
   };
 }

@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# DO NOT RUN THIS IN PRODUCTION, ESPECIALLY WITH THE `CREATE USER` PART!
+# Intended for use in development environments only (i.e. Firebase Studio)
+
+mariadb-admin -u root create phorge-devlabs
+mariadb -u root -e "CREATE USER 'phorge'@'%' IDENTIFIED BY 'phorge'; GRANT ALL PRIVILEGES ON phorge-devlabs.* TO 'phorge'@'%'; FLUSH PRVILLEGES;"

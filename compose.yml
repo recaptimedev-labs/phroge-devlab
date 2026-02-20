@@ -1,0 +1,45 @@
+services:
+  phorge:
+    image: ghcr.io/recaptime-dev/infra-docker-phorge:main
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    ports:
+      - 8443:443
+      - 8000:80
+      - 2222:22
+    env_file:
+    - .env
+    environment:
+      PHORGE_REPOSITORY_PATH: /repos
+      PHORGE_VCS_PORT: "2222"
+      PHORGE_HOST_KEYS_PATH: /host-keys
+      PHORGE_STORAGE_PATH: /files
+      PHORGE_STORAGE_TYPE: "disk"
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASS: a6efc924c5fe821824c36db7
+      #PHORGE_HOST: phorge.localhost
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./data/repos:/repos
+      - ./data/host-keys:/host-keys
+      - ./data/files:/files
+    depends_on: [mariadb]
+  mariadb:
+    restart: unless-stopped
+    ports:
+      - 13306:3306
+    volumes:
+    - ./data/mariadb:/var/lib/mariadb
+    image: mariadb:latest
+    hostname: mysql
+    environment:
+      MARIADB_USER: phorge
+      MARIADB_PASSWORD: phorge
+      MARIADB_DATABASE: phroge
+      MARIADB_ROOT_PASSWORD: a6efc924c5fe821824c36db7
+
+volumes:
+  phorge-devlabs-db:
