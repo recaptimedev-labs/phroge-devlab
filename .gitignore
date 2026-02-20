@@ -1,0 +1,6 @@
+.idx/.data
+src/
+data/
+!data/.keep
+.env*
+!.env.example

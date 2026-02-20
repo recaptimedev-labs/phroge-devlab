@@ -1,3 +1,7 @@
-Get started by customizing your environment (defined in the .idx/dev.nix file) with the tools and IDE extensions you'll need for your project!
+# `@andreijirohdev-labs/phorge-devlabs-idx`
 
-Learn more at https://developers.google.com/idx/guides/customize-idx-env
+## License
+
+* In this repo: MPL-2.0
+* The repo where builds happen: MIT
+* Phorge: TBD
