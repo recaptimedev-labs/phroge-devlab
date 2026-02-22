@@ -1,12 +1,10 @@
 services:
   phorge:
-    image: ghcr.io/recaptime-dev/infra-docker-phorge:main
+    image: ghcr.io/recaptime-dev/infra/ocker/phorge:main
     build:
       context: ./src
       dockerfile: Dockerfile
     ports:
-      - 8443:443
-      - 8000:80
       - 2222:22
     env_file:
     - .env
@@ -27,6 +25,13 @@ services:
       - ./data/host-keys:/host-keys
       - ./data/files:/files
     depends_on: [mariadb]
+  caddy:
+    depends_on: [mariadb, phorge]
+    image: caddy:latest
+    command: "caddy reverse-proxy --debug --access-log --from :80 --to phorge:80 --header-up 'X-Forwarded-Proto: https' --header-up 'Host: $PHORGE_HOST'"
+    env_file: .env
+    ports:
+    - 8000:80
   mariadb:
     restart: unless-stopped
     ports:

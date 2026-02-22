@@ -8,6 +8,9 @@
     gitFull
     tailscale
     mariadb_118
+    shellcheck
+    hadolint
+    shfmt
   ];
   # Sets environment variables in the workspace
   env = {};
@@ -20,6 +23,11 @@
       "ms-azuretools.vscode-containers"
       "github.vscode-github-actions"
       "redhat.vscode-yaml"
+      "hangxingliu.vscode-nginx-conf-hint"
+      "EditorConfig.EditorConfig"
+      "exiasr.hadolint"
+      "mkhl.shfmt"
+      "timonwong.shellcheck"
     ];
     # Enable previews
     previews = {
@@ -45,6 +53,7 @@
         # npm-install = "npm install";
         # Open editors for the following files by default, if they exist:
         #default.openFiles = [ ".idx/dev.nix" "README.md" ];
+        setup-devenv = "scripts/setup || true";
       };
       # Runs when the workspace is (re)started
       onStart = {
