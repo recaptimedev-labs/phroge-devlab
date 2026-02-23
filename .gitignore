@@ -4,3 +4,4 @@ data/
 !data/.keep
 .env*
 !.env.example
+.idx/dev.local.nix
