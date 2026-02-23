@@ -1,6 +1,11 @@
 # To learn more about how to use Nix to configure your environment
 # see: https://developers.google.com/idx/guides/customize-idx-env
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
+  # Allow local config imports
+  imports = lib.optionals (builtins.pathExists ./dev.local.nix) [
+    ./dev.local.nix
+  ];
+
   # Which nixpkgs channel to use.
   channel = "unstable"; # or "unstable"
   # Use https://search.nixos.org/packages to find packages
@@ -11,6 +16,10 @@
     shellcheck
     hadolint
     shfmt
+    github-cli
+    github-copilot-cli
+    glab
+    php83
   ];
   # Sets environment variables in the workspace
   env = {};
