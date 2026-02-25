@@ -1,6 +1,8 @@
 services:
   phorge:
-    image: ghcr.io/recaptime-dev/infra/ocker/phorge:main
+    restart: unless-stopped
+    image: ghcr.io/recaptime-dev/infra/docker/phorge:recaptime-dev-main
+    #pull_policy: always
     build:
       context: ./src
       dockerfile: Dockerfile
@@ -24,6 +26,7 @@ services:
       - ./data/repos:/repos
       - ./data/host-keys:/host-keys
       - ./data/files:/files
+      - ./data/tailscaled:/var/lib/tailscale
     depends_on: [mariadb]
   caddy:
     depends_on: [mariadb, phorge]
@@ -37,7 +40,7 @@ services:
     ports:
       - 13306:3306
     volumes:
-    - ./data/mariadb:/var/lib/mariadb
+    - ./data/mariadb:/var/lib/mysql
     image: mariadb:latest
     hostname: mysql
     environment:
