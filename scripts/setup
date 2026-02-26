@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+GIT_ROOT=$(git rev-parse --show-toplevel)
+
+if [[ -d "$GIT_ROOT/src" ]]; then
+    git -C "$GIT_ROOT/src" fetch && git pull --rebase
+else
+    git clone https://github.com/recaptime-dev/infra-docker-phorge "$GIT_ROOT/src"
+fi
