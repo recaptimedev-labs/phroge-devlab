@@ -67,7 +67,7 @@
       # Runs when the workspace is (re)started
       onStart = {
         # Example: start a background task to watch and re-build backend code
-        docker-compose = "docker compose up --build";
+        docker-compose = "docker compose down && docker compose up --build";
       };
     };
   };
